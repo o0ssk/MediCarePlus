@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F6F6F8">
+
+    <RelativeLayout
+        android:id="@+id/topBarAddApp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="24dp"
+        android:paddingTop="32dp"
+        android:paddingBottom="16dp"
+        android:background="#FFFFFF"
+        android:elevation="4dp">
+
+        <TextView
+            android:id="@+id/btnBackFromAddApp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:text="←"
+            android:textColor="#1142D4"
+            android:textSize="28sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="New Appointment"
+            android:textColor="#1142D4"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/topBarAddApp"
+        android:fillViewport="true"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="24dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="CLINICAL INTAKE"
+                android:textColor="#1142D4"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:letterSpacing="0.1"
+                android:layout_marginBottom="4dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Schedule a Visit"
+                android:textColor="#0F172A"
+                android:textSize="32sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="8dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Enter the provider details below to confirm the clinical slot."
+                android:textColor="#64748B"
+                android:textSize="15sp"
+                android:layout_marginBottom="32dp"/>
+
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Doctor's Name" android:textStyle="bold" android:textColor="#0F172A" android:layout_marginBottom="8dp" android:layout_marginStart="4dp"/>
+            <EditText
+                android:id="@+id/etDoctorName"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/editbox_background"
+                android:backgroundTint="#EEF3FF"
+                android:hint="Dr. Julian Sterling"
+                android:paddingHorizontal="20dp" />
+
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Specialty" android:textStyle="bold" android:textColor="#0F172A" android:layout_marginBottom="8dp" android:layout_marginStart="4dp"/>
+            <EditText
+                android:id="@+id/etSpecialty"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/editbox_background"
+                android:backgroundTint="#EEF3FF"
+                android:hint="e.g. Cardiology"
+                android:paddingHorizontal="20dp" />
+
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Appointment Date" android:textStyle="bold" android:textColor="#0F172A" android:layout_marginBottom="8dp" android:layout_marginStart="4dp"/>
+            <EditText
+                android:id="@+id/etAppDate"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/editbox_background"
+                android:backgroundTint="#EEF3FF"
+                android:hint="mm/dd/yyyy"
+                android:paddingHorizontal="20dp" />
+
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Preferred Time" android:textStyle="bold" android:textColor="#0F172A" android:layout_marginBottom="8dp" android:layout_marginStart="4dp"/>
+            <EditText
+                android:id="@+id/etAppTime"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/editbox_background"
+                android:backgroundTint="#EEF3FF"
+                android:hint="--:-- AM"
+                android:paddingHorizontal="20dp" />
+
+            <Button
+                android:id="@+id/btnSaveAppointment"
+                android:layout_width="match_parent"
+                android:layout_height="65dp"
+                android:layout_marginTop="24dp"
+                android:backgroundTint="#1142D4"
+                android:text="Save Appointment →"
+                android:textColor="@android:color/white"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:cornerRadius="12dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="SECURE CLINICAL SUBMISSION"
+                android:textColor="#94A3B8"
+                android:textSize="10sp"
+                android:textStyle="bold"
+                android:letterSpacing="0.2"
+                android:gravity="center"
+                android:layout_marginTop="16dp"/>
+
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>
