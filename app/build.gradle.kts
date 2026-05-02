@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.google.gms.google.services)
@@ -5,10 +7,11 @@ plugins {
 
 android {
     namespace = "com.example.medicareplus"
-    compileSdk {
-        version = release(36) {
-            minorApiLevel = 1
-        }
+    compileSdk = 36
+
+    buildFeatures {
+        buildConfig = true
+        viewBinding = true
     }
 
     defaultConfig {
@@ -19,6 +22,11 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        val properties = Properties().apply {
+            load(rootProject.file("local.properties").inputStream())
+        }
+        buildConfigField("String", "API_KEY", "\"${properties.getProperty("MY_SECRET_API_KEY")}\"")
     }
 
     buildTypes {
@@ -30,12 +38,10 @@ android {
             )
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
-    }
-    buildFeatures {
-        viewBinding = true
     }
 }
 

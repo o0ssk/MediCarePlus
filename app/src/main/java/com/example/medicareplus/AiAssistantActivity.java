@@ -7,7 +7,6 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,6 +24,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+import com.example.medicareplus.BuildConfig;
 
 public class AiAssistantActivity extends AppCompatActivity {
 
@@ -33,9 +33,8 @@ public class AiAssistantActivity extends AppCompatActivity {
     private CardView btnSendMessage;
     private ScrollView chatScrollView;
 
-    private static final String API_KEY = "AIzaSyARTIVRT2BMKxx89drBkQe0iOmpvCxD8W8";
-
-    private static final String API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemma-3-27b-it:generateContent?key=" + API_KEY;
+    // 🌟 تم إزالة المفتاح المكشوف واستخدام المفتاح المشفر والمخفي من BuildConfig
+    private static final String API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemma-3-27b-it:generateContent?key=" + BuildConfig.API_KEY;
 
     public static final MediaType JSON = MediaType.get("application/json; charset=utf-8");
     private OkHttpClient client;
@@ -131,7 +130,7 @@ public class AiAssistantActivity extends AppCompatActivity {
             client.newCall(request).enqueue(new Callback() {
                 @Override
                 public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                    runOnUiThread(() -> updateLastAiMessage("I'm sorry, I couldn't connect to the network. 🌐"));
+                    runOnUiThread(() -> updateLastAiMessage("I'm sorry, I couldn't connect to the network. Please check your connection."));
                 }
 
                 @Override
@@ -158,7 +157,6 @@ public class AiAssistantActivity extends AppCompatActivity {
                             runOnUiThread(() -> updateLastAiMessage("I couldn't understand the response. Let's try again."));
                         }
                     } else {
-
                         String errorMsg = "Error " + response.code() + ": " + responseBody;
                         android.util.Log.e("GemmaAPI", errorMsg);
                         runOnUiThread(() -> updateLastAiMessage("Error " + response.code() + " — check Logcat for details."));
