@@ -26,12 +26,13 @@
             app:cardCornerRadius="20dp"
             app:cardElevation="0dp">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="💼"
-                android:textSize="36sp" />
+            <ImageView
+                android:layout_width="52dp"
+                android:layout_height="54dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="4dp"
+                android:src="@drawable/ic_patient"
+                app:tint="#1142D4" />
         </androidx.cardview.widget.CardView>
 
         <TextView
@@ -70,15 +71,6 @@
                 android:paddingEnd="48dp"
                 android:textSize="16sp" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="16dp"
-                android:text="✉️"
-                android:textSize="18sp"
-                android:alpha="0.5"/>
         </RelativeLayout>
 
         <RelativeLayout
@@ -98,15 +90,6 @@
                 android:paddingEnd="48dp"
                 android:textSize="16sp" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="16dp"
-                android:text="👁️"
-                android:textSize="18sp"
-                android:alpha="0.5"/>
         </RelativeLayout>
 
         <TextView

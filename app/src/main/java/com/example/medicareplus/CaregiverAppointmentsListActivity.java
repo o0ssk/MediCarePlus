@@ -99,4 +99,5 @@ public class CaregiverAppointmentsListActivity extends AppCompatActivity {
 
         caregiverAppointmentsContainer.addView(view);
     }
+
 }

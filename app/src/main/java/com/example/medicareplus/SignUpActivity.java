@@ -9,14 +9,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.medicareplus.models.User;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.card.MaterialCardView;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -25,7 +21,7 @@ public class SignUpActivity extends AppCompatActivity {
     private MaterialCardView cardSelectPatient, cardSelectCaregiver;
     private EditText etName, etSignUpEmail, etSignUpPassword;
     private Button btnSignUp;
-    private TextView tvGoToLoginFromSignUp, tvBackToLogin;
+    private TextView tvGoToLoginFromSignUp;
 
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
@@ -43,8 +39,8 @@ public class SignUpActivity extends AppCompatActivity {
         etSignUpEmail = findViewById(R.id.etSignUpEmail);
         etSignUpPassword = findViewById(R.id.etSignUpPassword);
         btnSignUp = findViewById(R.id.btnSignUp);
+
         tvGoToLoginFromSignUp = findViewById(R.id.tvGoToLoginFromSignUp);
-        tvBackToLogin = findViewById(R.id.tvBackToLogin);
 
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
@@ -65,13 +61,11 @@ public class SignUpActivity extends AppCompatActivity {
 
         btnSignUp.setOnClickListener(v -> registerUser());
 
-        View.OnClickListener goToLogin = v -> {
+        tvGoToLoginFromSignUp.setOnClickListener(v -> {
             Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
             startActivity(intent);
             finish();
-        };
-        tvGoToLoginFromSignUp.setOnClickListener(goToLogin);
-        tvBackToLogin.setOnClickListener(goToLogin);
+        });
     }
 
     private void registerUser() {
@@ -103,7 +97,6 @@ public class SignUpActivity extends AppCompatActivity {
                         db.collection("Users").document(userId).set(newUser)
                                 .addOnCompleteListener(task1 -> {
                                     if (task1.isSuccessful()) {
-
                                         if (selectedRole.equals("Caregiver")) {
                                             startActivity(new Intent(SignUpActivity.this, CaregiverDashboardActivity.class));
                                         } else {
@@ -111,11 +104,11 @@ public class SignUpActivity extends AppCompatActivity {
                                         }
                                         finish();
                                     } else {
-                                        Toast.makeText(SignUpActivity.this, "Failed to save data: " + task1.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(SignUpActivity.this, "Failed to save data: " + task1.getException().getMessage(), Toast.LENGTH_LONG).show();
                                     }
                                 });
                     } else {
-                        Toast.makeText(SignUpActivity.this, "Registration failed: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(SignUpActivity.this, "Registration failed: " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
                     }
                 });
     }

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView; // 🌟 أضفنا مكتبة الصورة
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -71,7 +72,9 @@ public class CaregiverMedsListActivity extends AppCompatActivity {
                                         String dosage = doc.getString("dosage");
                                         String time = doc.getString("time");
 
-                                        addMedicationCardToUI(medId, name, dosage, time);
+                                        String type = doc.getString("type");
+
+                                        addMedicationCardToUI(medId, name, dosage, time, type);
                                     }
                                 });
                     } else {
@@ -80,7 +83,7 @@ public class CaregiverMedsListActivity extends AppCompatActivity {
                 });
     }
 
-    private void addMedicationCardToUI(String medId, String name, String dosage, String time) {
+    private void addMedicationCardToUI(String medId, String name, String dosage, String time, String type) {
         View cardView = LayoutInflater.from(this).inflate(R.layout.item_medication_card_modern, medsContainer, false);
 
         TextView tvName = cardView.findViewById(R.id.tvMedNameItem);
@@ -88,9 +91,34 @@ public class CaregiverMedsListActivity extends AppCompatActivity {
         TextView tvTime = cardView.findViewById(R.id.tvMedTimeItem);
         View btnDelete = cardView.findViewById(R.id.btnDeleteMed);
 
+        ImageView imgIcon = cardView.findViewById(R.id.imgMedIconItem);
+
         tvName.setText(name);
         tvDosage.setText(dosage);
         tvTime.setText("Scheduled for " + time);
+
+        if (type != null) {
+            switch (type) {
+                case "Syrup":
+                    imgIcon.setImageResource(R.drawable.ic_syrup);
+                    break;
+                case "Injection":
+                    imgIcon.setImageResource(R.drawable.ic_injection);
+                    break;
+                case "Inhaler":
+                    imgIcon.setImageResource(R.drawable.ic_inhaler);
+                    break;
+                case "Drops":
+                    imgIcon.setImageResource(R.drawable.ic_drops);
+                    break;
+                case "Pill":
+                default:
+                    imgIcon.setImageResource(R.drawable.ic_pill);
+                    break;
+            }
+        } else {
+            imgIcon.setImageResource(R.drawable.ic_pill);
+        }
 
         btnDelete.setOnClickListener(v -> {
             new AlertDialog.Builder(this)

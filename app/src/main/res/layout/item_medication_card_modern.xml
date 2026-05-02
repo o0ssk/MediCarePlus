@@ -26,12 +26,14 @@
                 app:cardBackgroundColor="#DCE4FF"
                 app:cardCornerRadius="16dp"
                 app:cardElevation="0dp">
-                <TextView
+
+                <ImageView
+                    android:id="@+id/imgMedIconItem"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:text="💊"
-                    android:textSize="24sp" />
+                    android:padding="12dp"
+                    android:src="@drawable/ic_pill"
+                     />
             </androidx.cardview.widget.CardView>
 
             <LinearLayout
@@ -74,13 +76,13 @@
                 app:cardBackgroundColor="@android:color/transparent"
                 app:cardCornerRadius="22dp"
                 app:cardElevation="0dp">
-                <TextView
+
+                <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:text="🗑️"
-                    android:textSize="20sp" />
-            </androidx.cardview.widget.CardView>
+                    android:padding="10dp"
+                    android:src="@drawable/ic_delete"
+                    app:tint="#EF4444" /> </androidx.cardview.widget.CardView>
         </RelativeLayout>
 
         <View
@@ -97,17 +99,13 @@
             android:gravity="center_vertical">
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="🕒 "
-                android:textSize="16sp"
-                android:alpha="0.6"/>
-
-            <TextView
                 android:id="@+id/tvMedTimeItem"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Scheduled for 8:00 AM"
+                android:drawableStart="@drawable/ic_time"
+                android:drawablePadding="8dp"
+                app:drawableTint="#64748B"
                 android:textColor="#64748B"
                 android:textSize="14sp" />
         </LinearLayout>

@@ -33,7 +33,7 @@ public class AiAssistantActivity extends AppCompatActivity {
     private CardView btnSendMessage;
     private ScrollView chatScrollView;
 
-    private static final String API_KEY = "";
+    private static final String API_KEY = "AIzaSyARTIVRT2BMKxx89drBkQe0iOmpvCxD8W8";
 
     private static final String API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemma-3-27b-it:generateContent?key=" + API_KEY;
 
@@ -62,7 +62,7 @@ public class AiAssistantActivity extends AppCompatActivity {
                 addUserMessage(userText);
                 etMessage.setText("");
                 addAiMessage("Thinking...");
-                callGemmaAPI(userText); // ✅ Renamed for clarity
+                callGemmaAPI(userText);
             }
         });
     }

@@ -38,34 +38,45 @@ public class LinkPatientActivity extends AppCompatActivity {
     }
 
     private void linkPatientToCaregiver() {
-        String patientId = etPatientId.getText().toString().trim();
+        String shortCodeInput = etPatientId.getText().toString().trim();
 
-        if (patientId.isEmpty()) {
-            Toast.makeText(this, "Please enter the Patient ID.", Toast.LENGTH_SHORT).show();
+        if (shortCodeInput.isEmpty() || shortCodeInput.length() < 5) {
+            Toast.makeText(this, "Please enter a valid 6-digit code.", Toast.LENGTH_SHORT).show();
             return;
         }
 
         btnConfirmLink.setEnabled(false);
-        btnConfirmLink.setText("Linking...");
+        btnConfirmLink.setText("Searching & Linking...");
 
         String caregiverId = mAuth.getCurrentUser().getUid();
 
-        db.collection("Users").document(patientId).get()
-                .addOnSuccessListener(documentSnapshot -> {
-                    if (documentSnapshot.exists()) {
+        db.collection("Users").whereEqualTo("shortCode", shortCodeInput).get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    if (!queryDocumentSnapshots.isEmpty()) {
+
+                        String patientId = queryDocumentSnapshots.getDocuments().get(0).getId();
 
                         db.collection("Users").document(patientId)
                                 .update("linkedCaregiverId", caregiverId)
                                 .addOnSuccessListener(aVoid -> {
-                                    Toast.makeText(this, "Success! Patient linked. 🔗", Toast.LENGTH_LONG).show();
-                                    finish();
+
+                                    db.collection("Users").document(caregiverId)
+                                            .update("linkedPatientId", patientId)
+                                            .addOnSuccessListener(aVoid2 -> {
+                                                Toast.makeText(this, "Success! Two-way link established. 🔗", Toast.LENGTH_LONG).show();
+                                                finish();
+                                            })
+                                            .addOnFailureListener(e -> {
+                                                Toast.makeText(this, "Linked patient, but failed to update caregiver.", Toast.LENGTH_SHORT).show();
+                                                resetButton();
+                                            });
                                 })
                                 .addOnFailureListener(e -> {
                                     Toast.makeText(this, "Failed to link patient. Check connection.", Toast.LENGTH_SHORT).show();
                                     resetButton();
                                 });
                     } else {
-                        Toast.makeText(this, "Invalid ID. Patient not found!", Toast.LENGTH_LONG).show();
+                        Toast.makeText(this, "Invalid Code. Patient not found!", Toast.LENGTH_LONG).show();
                         resetButton();
                     }
                 })

@@ -3,14 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F6F6F8">
+    android:background="#F8FAFC">
 
     <LinearLayout
         android:id="@+id/headerLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:background="#F6F6F8"
+        android:background="#FFFFFF"
         android:orientation="vertical"
         android:paddingHorizontal="24dp"
         android:paddingTop="20dp"
@@ -31,7 +31,10 @@
                 android:textColor="#1142D4"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                android:padding="4dp"/>
+                android:padding="4dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?attr/selectableItemBackground"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -98,21 +101,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="@drawable/status_badge_green"
-        android:backgroundTint="#FFFFFF"
+        android:background="#FFFFFF"
         android:padding="20dp"
         android:elevation="16dp">
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnNextStep"
             android:layout_width="match_parent"
-            android:layout_height="65dp"
+            android:layout_height="60dp"
             android:text="Next Step →"
             android:textColor="#FFFFFF"
-            android:textSize="18sp"
+            android:textSize="16sp"
             android:textStyle="bold"
             app:backgroundTint="#1142D4"
-            app:cornerRadius="12dp" />
+            app:cornerRadius="16dp" />
     </LinearLayout>
 
     <FrameLayout
@@ -143,26 +145,25 @@
                     app:cardCornerRadius="16dp"
                     app:cardElevation="0dp"
                     app:strokeColor="#C7D2FE"
-                    app:strokeWidth="1dp">
+                    app:strokeWidth="1dp"
+                    android:clickable="true"
+                    android:focusable="true">
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:padding="20dp"
                         android:gravity="center_vertical">
-                        <TextView
-                            android:layout_width="56dp"
-                            android:layout_height="56dp"
-                            android:background="@drawable/status_badge_green"
-                            android:backgroundTint="#DCE4FF"
-                            android:gravity="center"
-                            android:text="📷"
-                            android:textSize="24sp"
-                            android:layout_marginEnd="16dp"/>
+                        <ImageView
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:src="@drawable/ic_scan"
+                            app:tint="#1142D4" />
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:layout_marginStart="16dp"
                             android:orientation="vertical">
                             <TextView
                                 android:layout_width="wrap_content"
@@ -196,9 +197,77 @@
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:layout_marginBottom="16dp"
-                    android:background="@drawable/editbox_background"
+                    android:background="@drawable/bg_rounded_input"
                     android:hint="Search drug name (e.g. Lisinopril)"
+                    android:textColor="#0F172A"
                     android:padding="16dp" />
+
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Medication Type" android:textStyle="bold" android:textColor="#0F172A" android:layout_marginBottom="8dp"/>
+
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scrollbars="none"
+                    android:layout_marginBottom="16dp">
+
+                    <RadioGroup
+                        android:id="@+id/rgMedType"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:id="@+id/rbPill"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="16dp"
+                            android:checked="true"
+                            android:drawableStart="@drawable/ic_pill"
+                            android:drawablePadding="8dp"
+                            android:buttonTint="#1142D4"
+                            android:text="Pill" />
+
+                        <RadioButton
+                            android:id="@+id/rbSyrup"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Syrup"
+                            android:drawableStart="@drawable/ic_syrup"
+                            android:drawablePadding="8dp"
+                            android:buttonTint="#1142D4"
+                            android:layout_marginEnd="16dp"/>
+
+                        <RadioButton
+                            android:id="@+id/rbInjection"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Injection"
+                            android:drawableStart="@drawable/ic_injection"
+                            android:drawablePadding="8dp"
+                            android:buttonTint="#1142D4"
+                            android:layout_marginEnd="16dp"/>
+
+                        <RadioButton
+                            android:id="@+id/rbInhaler"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Inhaler"
+                            android:drawableStart="@drawable/ic_inhaler"
+                            android:drawablePadding="8dp"
+                            android:buttonTint="#1142D4"
+                            android:layout_marginEnd="16dp"/>
+
+                        <RadioButton
+                            android:id="@+id/rbDrops"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Drops"
+                            android:drawableStart="@drawable/ic_drops"
+                            android:buttonTint="#1142D4"
+                            android:drawablePadding="8dp"/>
+
+                    </RadioGroup>
+                </HorizontalScrollView>
 
                 <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Dosage Strength" android:textStyle="bold" android:textColor="#0F172A" android:layout_marginBottom="8dp"/>
                 <LinearLayout
@@ -212,17 +281,23 @@
                         android:layout_height="60dp"
                         android:layout_weight="2"
                         android:layout_marginEnd="12dp"
-                        android:background="@drawable/editbox_background"
+                        android:background="@drawable/bg_rounded_input"
                         android:hint="e.g. 500"
+                        android:textColor="#0F172A"
                         android:inputType="numberDecimal"
                         android:padding="16dp" />
+
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="60dp"
                         android:layout_weight="1"
-                        android:background="@drawable/editbox_background"
+                        android:background="@drawable/bg_rounded_input"
                         android:gravity="center"
-                        android:text="mg ⌄"
+                        android:text="mg"
+                        android:drawableEnd="@drawable/ic_chevron_right"
+                        android:drawablePadding="4dp"
+                        app:drawableTint="#64748B"
+                        android:paddingHorizontal="16dp"
                         android:textColor="#0F172A"
                         android:textSize="16sp"
                         android:textStyle="bold" />
@@ -233,8 +308,9 @@
                     android:id="@+id/etNickname"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
-                    android:background="@drawable/editbox_background"
+                    android:background="@drawable/bg_rounded_input"
                     android:hint="e.g. Mom's Heart Pill"
+                    android:textColor="#0F172A"
                     android:padding="16dp" />
             </LinearLayout>
         </ScrollView>
@@ -267,9 +343,10 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:layout_marginBottom="12dp">
+
                     <com.google.android.material.card.MaterialCardView
                         android:layout_width="0dp"
-                        android:layout_height="100dp"
+                        android:layout_height="110dp"
                         android:layout_weight="1"
                         android:layout_marginEnd="8dp"
                         app:cardBackgroundColor="#EEF3FF"
@@ -282,13 +359,18 @@
                             android:layout_height="match_parent"
                             android:orientation="vertical"
                             android:gravity="center">
-                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="📅" android:textSize="28sp"/>
+                            <ImageView
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                android:src="@drawable/ic_calendar"
+                                android:layout_marginBottom="8dp"/>
                             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Daily" android:textColor="#1142D4" android:textStyle="bold"/>
                         </LinearLayout>
                     </com.google.android.material.card.MaterialCardView>
+
                     <com.google.android.material.card.MaterialCardView
                         android:layout_width="0dp"
-                        android:layout_height="100dp"
+                        android:layout_height="110dp"
                         android:layout_weight="1"
                         android:layout_marginStart="8dp"
                         app:cardBackgroundColor="#FFFFFF"
@@ -301,7 +383,11 @@
                             android:layout_height="match_parent"
                             android:orientation="vertical"
                             android:gravity="center">
-                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="📆" android:textSize="28sp"/>
+                            <ImageView
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                android:src="@drawable/ic_calendar_month"
+                                android:layout_marginBottom="8dp"/>
                             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Specific Days" android:textColor="#64748B" android:textStyle="bold"/>
                         </LinearLayout>
                     </com.google.android.material.card.MaterialCardView>
@@ -310,19 +396,30 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Daily Times"
+                    android:text="Daily Time"
                     android:textColor="#0F172A"
                     android:textSize="20sp"
                     android:textStyle="bold"
                     android:layout_marginTop="16dp"
-                    android:layout_marginBottom="16dp"/>
+                    android:layout_marginBottom="8dp"/>
+
+                <EditText
+                    android:id="@+id/etTimePicker"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_marginBottom="16dp"
+                    android:background="@drawable/bg_rounded_input"
+                    android:hint="Set Time (e.g. 08:00 AM)"
+                    android:textColor="#0F172A"
+                    android:inputType="time"
+                    android:padding="16dp" />
 
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="12dp"
                     app:cardBackgroundColor="#FFFFFF"
-                    app:cardCornerRadius="12dp"
+                    app:cardCornerRadius="16dp"
                     app:cardElevation="0dp"
                     app:strokeColor="#E2E8F0"
                     app:strokeWidth="1dp">
@@ -332,12 +429,19 @@
                         android:orientation="horizontal"
                         android:padding="16dp"
                         android:gravity="center_vertical">
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="☀️" android:textSize="24sp" android:layout_marginEnd="16dp"/>
+
+                        <ImageView
+                            android:layout_width="28dp"
+                            android:layout_height="28dp"
+                            android:src="@drawable/ic_morning"
+                            app:tint="#F59E0B"
+                            android:layout_marginEnd="16dp"/>
+
                         <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical">
                             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="MORNING" android:textColor="#64748B" android:textSize="12sp" android:textStyle="bold"/>
-                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="08:00 AM" android:textColor="#0F172A" android:textSize="20sp" android:textStyle="bold"/>
+                            <TextView android:id="@+id/tvDisplayTime" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="--:--" android:textColor="#0F172A" android:textSize="20sp" android:textStyle="bold"/>
                         </LinearLayout>
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="1 pill" android:textColor="#0F172A" android:textStyle="bold" android:background="@drawable/editbox_background" android:padding="8dp"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="1 dose" android:textColor="#1142D4" android:textStyle="bold" android:background="@drawable/bg_rounded_id" android:padding="8dp"/>
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
 
@@ -384,19 +488,28 @@
                     app:cardCornerRadius="16dp"
                     app:cardElevation="0dp"
                     app:strokeColor="#1142D4"
-                    app:strokeWidth="2dp">
+                    app:strokeWidth="1dp">
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:padding="16dp"
                         android:gravity="center_vertical">
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="🎵" android:textSize="28sp" android:layout_marginEnd="16dp"/>
+                        <ImageView
+                            android:layout_width="28dp"
+                            android:layout_height="28dp"
+                            android:src="@drawable/ic_notifications_active"
+                            app:tint="#1142D4"
+                            android:layout_marginEnd="16dp"/>
                         <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical">
                             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Gentle Chime" android:textColor="#0F172A" android:textSize="16sp" android:textStyle="bold"/>
                             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Soft reminder. Best for vitamins." android:textColor="#64748B" android:textSize="12sp"/>
                         </LinearLayout>
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="▶" android:textColor="#1142D4" android:textSize="20sp"/>
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/ic_play"
+                            app:tint="#1142D4"/>
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
 
@@ -419,9 +532,10 @@
                     <EditText
                         android:layout_width="100dp"
                         android:layout_height="50dp"
-                        android:background="@drawable/editbox_background"
+                        android:background="@drawable/bg_rounded_input"
                         android:text="30"
                         android:gravity="center"
+                        android:inputType="number"
                         android:textStyle="bold"
                         android:textColor="#0F172A"/>
                 </LinearLayout>
@@ -430,14 +544,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:gravity="center_vertical">
-                    <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Low Stock Alert Threshold" android:textStyle="bold" android:textColor="#64748B"/>
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="40dp"> <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Low Stock Alert Threshold" android:textStyle="bold" android:textColor="#64748B"/>
                     <EditText
                         android:layout_width="100dp"
                         android:layout_height="50dp"
-                        android:background="@drawable/editbox_background"
+                        android:background="@drawable/bg_rounded_input"
                         android:text="5"
                         android:gravity="center"
+                        android:inputType="number"
                         android:textStyle="bold"
                         android:textColor="#0F172A"/>
                 </LinearLayout>

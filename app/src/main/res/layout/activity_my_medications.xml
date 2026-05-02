@@ -2,44 +2,54 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F0F4F8"
+    android:background="#F8FAFC"
     android:orientation="vertical"
-    android:padding="24dp">
+    android:paddingTop="32dp"> <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingHorizontal="24dp">
 
     <TextView
         android:id="@+id/tvBackToElderlyDash"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:padding="8dp"
-        android:text="← رجوع"
-        android:textColor="#1976D2"
-        android:textSize="22sp"
-        android:textStyle="bold" />
+        android:layout_marginBottom="16dp"
+        android:paddingVertical="8dp"
+        android:paddingEnd="16dp"
+        android:text="← Back"
+        android:textColor="#1142D4"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:clickable="true"
+        android:focusable="true"
+        android:background="?attr/selectableItemBackground" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
-        android:gravity="center"
-        android:text="💊 أدويتي اليوم"
-        android:textColor="#000000"
+        android:layout_marginBottom="16dp"
+        android:text="My Medications"
+        android:textColor="#0F172A"
         android:textSize="32sp"
         android:textStyle="bold" />
+</LinearLayout>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true">
+        android:fillViewport="true"
+        android:clipToPadding="false"
+        android:scrollbars="none">
 
         <LinearLayout
             android:id="@+id/medsContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingBottom="20dp">
-
-        </LinearLayout>
+            android:paddingHorizontal="24dp"
+            android:paddingTop="8dp"
+            android:paddingBottom="40dp"> </LinearLayout>
     </ScrollView>
 
 </LinearLayout>

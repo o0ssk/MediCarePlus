@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F6F6F8">
+    android:background="#F8FAFC">
 
     <RelativeLayout
         android:id="@+id/topBarAddApp"
@@ -20,10 +20,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
-            android:text="←"
+            android:layout_centerVertical="true"
+            android:text="← Back"
             android:textColor="#1142D4"
-            android:textSize="28sp"
-            android:textStyle="bold" />
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:paddingVertical="8dp"
+            android:paddingEnd="16dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?attr/selectableItemBackground"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -81,10 +87,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_marginBottom="20dp"
-                android:background="@drawable/editbox_background"
-                android:backgroundTint="#EEF3FF"
+                android:background="@drawable/bg_rounded_input"
                 android:hint="Dr. Julian Sterling"
-                android:paddingHorizontal="20dp" />
+                android:textColor="#0F172A"
+                android:paddingHorizontal="20dp"
+                android:inputType="textPersonName" />
 
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Specialty" android:textStyle="bold" android:textColor="#0F172A" android:layout_marginBottom="8dp" android:layout_marginStart="4dp"/>
             <EditText
@@ -92,10 +99,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_marginBottom="20dp"
-                android:background="@drawable/editbox_background"
-                android:backgroundTint="#EEF3FF"
+                android:background="@drawable/bg_rounded_input"
                 android:hint="e.g. Cardiology"
-                android:paddingHorizontal="20dp" />
+                android:textColor="#0F172A"
+                android:paddingHorizontal="20dp"
+                android:inputType="text" />
 
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Appointment Date" android:textStyle="bold" android:textColor="#0F172A" android:layout_marginBottom="8dp" android:layout_marginStart="4dp"/>
             <EditText
@@ -103,10 +111,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_marginBottom="20dp"
-                android:background="@drawable/editbox_background"
-                android:backgroundTint="#EEF3FF"
-                android:hint="mm/dd/yyyy"
-                android:paddingHorizontal="20dp" />
+                android:background="@drawable/bg_rounded_input"
+                android:hint="MM/DD/YYYY"
+                android:textColor="#0F172A"
+                android:paddingHorizontal="20dp"
+                android:inputType="date" />
 
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Preferred Time" android:textStyle="bold" android:textColor="#0F172A" android:layout_marginBottom="8dp" android:layout_marginStart="4dp"/>
             <EditText
@@ -114,22 +123,23 @@
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_marginBottom="20dp"
-                android:background="@drawable/editbox_background"
-                android:backgroundTint="#EEF3FF"
-                android:hint="--:-- AM"
-                android:paddingHorizontal="20dp" />
+                android:background="@drawable/bg_rounded_input"
+                android:hint="--:-- AM/PM"
+                android:textColor="#0F172A"
+                android:paddingHorizontal="20dp"
+                android:inputType="time" />
 
             <Button
                 android:id="@+id/btnSaveAppointment"
                 android:layout_width="match_parent"
-                android:layout_height="65dp"
+                android:layout_height="60dp"
                 android:layout_marginTop="24dp"
                 android:backgroundTint="#1142D4"
-                android:text="Save Appointment →"
+                android:text="Save Appointment"
                 android:textColor="@android:color/white"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:textStyle="bold"
-                app:cornerRadius="12dp" />
+                app:cornerRadius="16dp" />
 
             <TextView
                 android:layout_width="match_parent"

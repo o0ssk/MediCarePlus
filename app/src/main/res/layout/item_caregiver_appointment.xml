@@ -26,7 +26,7 @@
                 android:id="@+id/tvCgAppointDoc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="اسم الطبيب"
+                android:text="Doctor Name"
                 android:textColor="#000000"
                 android:textSize="22sp"
                 android:textStyle="bold" />
@@ -36,7 +36,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="التخصص"
+                android:text="Specialty"
                 android:textColor="#757575"
                 android:textSize="16sp" />
 
@@ -45,22 +45,22 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="التاريخ والوقت"
+                android:text="Date &amp; Time"
                 android:textColor="#000000"
                 android:textSize="16sp"
                 android:textStyle="bold" />
         </LinearLayout>
 
-        <TextView
+        <ImageView
             android:id="@+id/btnDeleteAppoint"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:clickable="true"
             android:focusable="true"
-            android:gravity="center"
-            android:text="🗑️"
-            android:textSize="24sp" />
+            android:padding="12dp"
+            android:src="@drawable/ic_delete"
+            app:tint="#EF4444" />
 
     </LinearLayout>
 </androidx.cardview.widget.CardView>

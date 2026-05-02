@@ -3,49 +3,55 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F6F6F8">
+    android:background="#F8FAFC"> <RelativeLayout
+    android:id="@+id/topBarAI"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingHorizontal="24dp"
+    android:paddingTop="32dp"
+    android:paddingBottom="16dp"
+    android:background="#FFFFFF"
+    android:elevation="4dp">
 
-    <RelativeLayout
-        android:id="@+id/topBarAI"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/btnBackFromAI"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingHorizontal="24dp"
-        android:paddingTop="32dp"
-        android:paddingBottom="16dp"
-        android:background="#FFFFFF"
-        android:elevation="4dp">
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:text="← Back"
+        android:textColor="#1142D4"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:paddingVertical="8dp"
+        android:paddingEnd="16dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:background="?attr/selectableItemBackground"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_marginEnd="8dp"
+            android:src="@drawable/ic_ai"
+            app:tint="#1142D4" />
 
         <TextView
-            android:id="@+id/btnBackFromAI"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
-            android:text="←"
-            android:textColor="#1142D4"
-            android:textSize="32sp"
+            android:text="Medicare AI"
+            android:textColor="#0F172A"
+            android:textSize="20sp"
             android:textStyle="bold" />
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="🤖 "
-                android:textSize="24sp" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Medicare AI"
-                android:textColor="#0F172A"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-        </LinearLayout>
-    </RelativeLayout>
+    </LinearLayout>
+</RelativeLayout>
 
     <LinearLayout
         android:id="@+id/inputArea"
@@ -63,12 +69,11 @@
             android:layout_width="0dp"
             android:layout_height="60dp"
             android:layout_weight="1"
-            android:background="@drawable/editbox_background"
-            android:backgroundTint="#F1F5F9"
+            android:background="@drawable/bg_rounded_input"
             android:hint="Ask a question..."
             android:paddingHorizontal="20dp"
             android:textColor="#0F172A"
-            android:textSize="18sp" />
+            android:textSize="16sp" />
 
         <androidx.cardview.widget.CardView
             android:id="@+id/btnSendMessage"
@@ -81,14 +86,14 @@
             app:cardBackgroundColor="#1142D4"
             app:cardCornerRadius="30dp"
             app:cardElevation="0dp">
-            <TextView
+
+            <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="➤"
-                android:textColor="#FFFFFF"
-                android:textSize="24sp" />
-        </androidx.cardview.widget.CardView>
+                android:padding="18dp"
+                android:src="@drawable/ic_send"
+                app:tint="#FFFFFF"
+                android:layout_marginStart="4dp"/> </androidx.cardview.widget.CardView>
     </LinearLayout>
 
     <ScrollView
@@ -99,6 +104,7 @@
         android:layout_above="@id/inputArea"
         android:fillViewport="true"
         android:clipToPadding="false"
+        android:scrollbars="none"
         android:padding="24dp">
 
         <LinearLayout

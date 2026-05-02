@@ -3,12 +3,15 @@ package com.example.medicareplus;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.card.MaterialCardView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -17,18 +20,28 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.ListenerRegistration;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class CaregiverDashboardActivity extends AppCompatActivity {
 
-    // 1. تعريف العناصر الجديدة المطابقة لملف التصميم
-    private TextView tvCaregiverNameTitle, tvMedsStatus, tvLinkNewPatient, tvPatientNameLabel, navLogout;
+    private TextView tvCaregiverNameTitle, tvMedsStatus, tvLinkNewPatient;
     private MaterialCardView cardManageMedsNew, cardAppointmentsNew;
     private CardView fabQuickAdd;
+
+    private LinearLayout navHomeCaregiver, navPatientsCaregiver, navChatCaregiver, navLogoutCaregiver;
+
+    private RecyclerView recyclerPatientsList;
+    private PatientsAdapter patientsAdapter;
+    private List<Patient> patientList;
 
     private ListenerRegistration medsListener;
     private ListenerRegistration emergencyListener;
 
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
+
+    private String linkedPatientId = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,17 +51,29 @@ public class CaregiverDashboardActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
 
-        // 2. ربط العناصر بالـ IDs الجديدة
         tvCaregiverNameTitle = findViewById(R.id.tvCaregiverNameTitle);
         tvMedsStatus = findViewById(R.id.tvMedsStatus);
         tvLinkNewPatient = findViewById(R.id.tvLinkNewPatient);
-        tvPatientNameLabel = findViewById(R.id.tvPatientNameLabel);
-        navLogout = findViewById(R.id.navLogout);
         cardManageMedsNew = findViewById(R.id.cardManageMedsNew);
         cardAppointmentsNew = findViewById(R.id.cardAppointmentsNew);
         fabQuickAdd = findViewById(R.id.fabQuickAdd);
 
-        // 3. جلب اسم مقدم الرعاية وعرضه بالأنجليزية
+        navHomeCaregiver = findViewById(R.id.navHomeCaregiver);
+        navPatientsCaregiver = findViewById(R.id.navPatientsCaregiver);
+        navChatCaregiver = findViewById(R.id.navChatCaregiver);
+
+
+        recyclerPatientsList = findViewById(R.id.recyclerPatientsList);
+        recyclerPatientsList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        patientList = new ArrayList<>();
+
+        patientsAdapter = new PatientsAdapter(patientList, patient -> {
+            linkedPatientId = patient.getId();
+            Toast.makeText(this, "Monitoring: " + patient.getName(), Toast.LENGTH_SHORT).show();
+            monitorSelectedPatientMeds(linkedPatientId);
+        });
+        recyclerPatientsList.setAdapter(patientsAdapter);
+
         String userId = mAuth.getCurrentUser().getUid();
         db.collection("Users").document(userId).get().addOnSuccessListener(documentSnapshot -> {
             if (documentSnapshot.exists()) {
@@ -57,39 +82,114 @@ public class CaregiverDashboardActivity extends AppCompatActivity {
             }
         });
 
-        // 4. برمجة الأحداث للبطاقات الجديدة
         tvLinkNewPatient.setOnClickListener(v -> {
             Intent intent = new Intent(this, LinkPatientActivity.class);
             startActivity(intent);
         });
 
+        androidx.cardview.widget.CardView imgProfileCaregiver = findViewById(R.id.imgProfileCaregiver);
+        imgProfileCaregiver.setOnClickListener(v -> {
+            startActivity(new Intent(CaregiverDashboardActivity.this, CaregiverProfileActivity.class));
+        });
+
         cardManageMedsNew.setOnClickListener(v -> {
-            Intent intent = new Intent(this, CaregiverMedsListActivity.class);
-            startActivity(intent);
+            if (linkedPatientId != null) {
+                Intent intent = new Intent(this, CaregiverMedsListActivity.class);
+                intent.putExtra("PATIENT_ID", linkedPatientId);
+                startActivity(intent);
+            } else {
+                Toast.makeText(this, "Select a patient first!", Toast.LENGTH_SHORT).show();
+            }
         });
 
         cardAppointmentsNew.setOnClickListener(v -> {
-            Intent intent = new Intent(this, CaregiverAppointmentsListActivity.class);
-            startActivity(intent);
+            if (linkedPatientId != null) {
+                Intent intent = new Intent(this, CaregiverAppointmentsListActivity.class);
+                intent.putExtra("PATIENT_ID", linkedPatientId);
+                startActivity(intent);
+            } else {
+                Toast.makeText(this, "Select a patient first!", Toast.LENGTH_SHORT).show();
+            }
         });
 
-        // زر الإضافة العائم السريع (يأخذك لإضافة دواء كإجراء سريع)
         fabQuickAdd.setOnClickListener(v -> {
-            Intent intent = new Intent(this, AddMedicationActivity.class);
-            startActivity(intent);
+            if (linkedPatientId != null) {
+                Intent intent = new Intent(this, AddMedicationActivity.class);
+                intent.putExtra("PATIENT_ID", linkedPatientId);
+                startActivity(intent);
+            } else {
+                Toast.makeText(this, "Select a patient first!", Toast.LENGTH_SHORT).show();
+            }
         });
 
-        // تسجيل الخروج من الشريط السفلي
-        navLogout.setOnClickListener(v -> {
-            mAuth.signOut();
-            Intent intent = new Intent(CaregiverDashboardActivity.this, LoginActivity.class);
-            startActivity(intent);
-            finish();
+        navChatCaregiver.setOnClickListener(v -> {
+            if (linkedPatientId != null && !linkedPatientId.isEmpty()) {
+                Intent intent = new Intent(CaregiverDashboardActivity.this, ChatActivity.class);
+                intent.putExtra("RECEIVER_ID", linkedPatientId);
+                startActivity(intent);
+            } else {
+                Toast.makeText(this, "Select a patient first to chat!", Toast.LENGTH_SHORT).show();
+            }
         });
 
-        // تشغيل الرادارات (الاستماع اللحظي)
         startEmergencyRadar();
-        monitorPatientMedications();
+        loadAllLinkedPatients();
+    }
+
+
+    private void loadAllLinkedPatients() {
+        String caregiverId = mAuth.getCurrentUser().getUid();
+
+        db.collection("Users").whereEqualTo("linkedCaregiverId", caregiverId)
+                .addSnapshotListener((value, error) -> {
+                    if (error != null || value == null) return;
+
+                    patientList.clear();
+                    for (DocumentSnapshot doc : value.getDocuments()) {
+                        patientList.add(new Patient(doc.getId(), doc.getString("name")));
+                    }
+                    patientsAdapter.notifyDataSetChanged();
+
+                    if (!patientList.isEmpty() && linkedPatientId == null) {
+                        Patient firstPatient = patientList.get(0);
+                        linkedPatientId = firstPatient.getId();
+                        monitorSelectedPatientMeds(linkedPatientId);
+                    } else if (patientList.isEmpty()) {
+                        tvMedsStatus.setText("No linked patients found.");
+                    }
+                });
+    }
+
+    private void monitorSelectedPatientMeds(String patientId) {
+        if (medsListener != null) {
+            medsListener.remove();
+        }
+
+        medsListener = db.collection("Medications")
+                .whereEqualTo("patientId", patientId)
+                .addSnapshotListener((value, error) -> {
+                    if (error != null || value == null) return;
+
+                    int totalMeds = value.size();
+                    int takenMeds = 0;
+
+                    for (DocumentSnapshot doc : value.getDocuments()) {
+                        Boolean isTaken = doc.getBoolean("isTaken");
+                        if (isTaken != null && isTaken) takenMeds++;
+                    }
+
+                    if (totalMeds > 0) {
+                        tvMedsStatus.setText("Today: " + takenMeds + "/" + totalMeds + " meds taken.");
+                        if (takenMeds == totalMeds) {
+                            tvMedsStatus.setTextColor(Color.parseColor("#16A34A"));
+                        } else {
+                            tvMedsStatus.setTextColor(Color.parseColor("#F59E0B"));
+                        }
+                    } else {
+                        tvMedsStatus.setText("No medications scheduled.");
+                        tvMedsStatus.setTextColor(Color.parseColor("#64748B"));
+                    }
+                });
     }
 
     private void startEmergencyRadar() {
@@ -114,7 +214,6 @@ public class CaregiverDashboardActivity extends AppCompatActivity {
     }
 
     private void showEmergencyDialog(String patientName, String emergencyId) {
-        // تنبيه الطوارئ باللغة الإنجليزية ليتناسب مع الواجهة
         new AlertDialog.Builder(this)
                 .setTitle("🚨 Emergency Alert!")
                 .setMessage("Patient (" + patientName + ") needs immediate help!")
@@ -138,52 +237,4 @@ public class CaregiverDashboardActivity extends AppCompatActivity {
         }
     }
 
-    private void monitorPatientMedications() {
-        String caregiverId = mAuth.getCurrentUser().getUid();
-
-        db.collection("Users").whereEqualTo("linkedCaregiverId", caregiverId)
-                .get()
-                .addOnSuccessListener(queryDocumentSnapshots -> {
-                    if (!queryDocumentSnapshots.isEmpty()) {
-
-                        DocumentSnapshot patientDoc = queryDocumentSnapshots.getDocuments().get(0);
-                        String patientId = patientDoc.getId();
-                        String patientName = patientDoc.getString("name");
-
-                        // وضع اسم المريض الحقيقي في البطاقة بدلاً من كلمة "Patient" الثابتة
-                        if(patientName != null) {
-                            tvPatientNameLabel.setText(patientName);
-                        }
-
-                        medsListener = db.collection("Medications")
-                                .whereEqualTo("patientId", patientId)
-                                .addSnapshotListener((value, error) -> {
-                                    if (error != null || value == null) return;
-
-                                    int totalMeds = value.size();
-                                    int takenMeds = 0;
-
-                                    for (DocumentSnapshot doc : value.getDocuments()) {
-                                        Boolean isTaken = doc.getBoolean("isTaken");
-                                        if (isTaken != null && isTaken) takenMeds++;
-                                    }
-
-                                    // تحديث حالة الأدوية باللغة الإنجليزية وألوان متناسقة مع التصميم
-                                    if (totalMeds > 0) {
-                                        tvMedsStatus.setText("Today: " + takenMeds + "/" + totalMeds + " meds taken.");
-                                        if (takenMeds == totalMeds) {
-                                            tvMedsStatus.setTextColor(Color.parseColor("#16A34A")); // لون أخضر
-                                        } else {
-                                            tvMedsStatus.setTextColor(Color.parseColor("#F59E0B")); // لون برتقالي
-                                        }
-                                    } else {
-                                        tvMedsStatus.setText("No medications scheduled.");
-                                        tvMedsStatus.setTextColor(Color.parseColor("#64748B")); // لون رمادي
-                                    }
-                                });
-                    } else {
-                        tvMedsStatus.setText("No linked patient found.");
-                    }
-                });
-    }
 }
